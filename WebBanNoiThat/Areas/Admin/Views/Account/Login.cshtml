@@ -1,0 +1,50 @@
+﻿@model WebBanNoiThat.Models.Account
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = null ;
+}
+
+@*@section styles{
+    <link href="" rel="stylesheet" />
+}*@
+
+@using (Html.BeginForm("Login", "Account", FormMethod.Post))
+{
+    <div class="form-wrap container wrap-login wrapFormClass">
+        <div class="table">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-12 has-feedback">
+                            <p>UserName</p>
+                            @Html.TextBoxFor(p => p.TaiKhoan)
+                            @Html.ValidationMessageFor(p => p.TaiKhoan, null, new { @Class = "font-red" })
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 has-feedback">
+                            <p>Password</p>
+                            @Html.TextBoxFor(p => p.MatKhau, new { @type = "password", @data_key = "Passcode" })
+                            @Html.ValidationMessageFor(p => p.MatKhau, null, new { @Class = "font-red" })
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <button id="submitForm">
+                                Login
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section scripts{
+    <script src=""></script>
+}
+
