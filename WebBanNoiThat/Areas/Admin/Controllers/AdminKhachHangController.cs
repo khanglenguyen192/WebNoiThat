@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,15 +14,19 @@ namespace WebBanNoiThat.Areas.Admin.Controllers
     public class AdminKhachHangController : Controller
     {
         private readonly BanNoiThatContext _context;
-
-        public AdminKhachHangController(BanNoiThatContext context)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private ISession _session => _httpContextAccessor.HttpContext.Session;
+        public AdminKhachHangController(BanNoiThatContext context, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         // GET: Admin/AdminKhachHang
         public async Task<IActionResult> Index()
         {
+            if (_session.Get("taikhoan") == null)
+                return RedirectToAction("Login", "Account");
             return View(await _context.KhachHangs.ToListAsync());
         }
 

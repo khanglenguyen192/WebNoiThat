@@ -1,13 +1,9 @@
 ﻿@model WebBanNoiThat.Models.Account
 
 @{
-    ViewData["Title"] = "Create";
-    Layout = null ;
+    ViewData["Title"] = "Login";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-
-@*@section styles{
-    <link href="" rel="stylesheet" />
-}*@
 
 @using (Html.BeginForm("Login", "Account", FormMethod.Post))
 {
@@ -42,9 +38,5 @@
             </div>
         </div>
     </div>
-}
-
-@section scripts{
-    <script src=""></script>
 }
 

@@ -27,6 +27,9 @@ namespace WebBanNoiThat.Areas.Admin.Controllers
         // GET: Admin/Account
         public async Task<IActionResult> Index()
         {
+            if (_session.Get("taikhoan") == null)
+                return View(new List<Account>());
+
             return View(await _context.Accounts.ToListAsync());
         }
 
@@ -177,6 +180,8 @@ namespace WebBanNoiThat.Areas.Admin.Controllers
         [AllowAnonymous]
         public ActionResult Logout()
         {
+            if (_session.Get("taikhoan") == null && _session.Get("matkhau") == null)
+                return Redirect(HttpContext.Request.Headers["Referer"]);
             _session.Clear();
             return RedirectToAction("Login", "Account");
         }
