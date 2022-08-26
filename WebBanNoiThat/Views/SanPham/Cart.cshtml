@@ -32,11 +32,11 @@
                            <td>@(stt++)</td>
                            <td>@cartitem.SanPham.TenSp</td>
                            <td>@(cartitem.SanPham.GiaSp.ToString("n0"))</td>
-                           <td><input asp-for="@cartitem.SoLuong" id="@($"quantity-{cartitem.SanPham.MaSp}")"/></td>
+                           <td><input asp-for="@cartitem.SoLuong" id="@cartitem.SanPham.MaSp" class="quantity"/></td>
                            <td>@(thanhtien.ToString("n0"))</td>
                            <td>
                               <button class="btn btn-success updatecartitem" data-productid="@cartitem.SanPham.MaSp"
-                              onclick="updateCartItem(@cartitem.SanPham.MaSp, @cartitem.SoLuong)">Cập nhật</button>
+                              onclick="updateCartItem(@cartitem.SanPham.MaSp)">Cập nhật</button>
                               <a asp-action="RemoveCartItem"
                                  asp-controller="SanPham" 
                                  asp-route-id="@cartitem.SanPham.MaSp"
@@ -52,14 +52,15 @@
                 </table>
 
                 <script>
-                    function updateCartItem(id, soLuong)
+                    function updateCartItem(id)
                     {
+                        var quantity = $(".quantity#" + id).val();
                         $.ajax({
                           type: "POST",
                           url:"@Url.RouteUrl("updatecart")",
-                          data: { id: id, soLuong: soLuong }
+                          data: { id: id, soLuong: quantity }
                        }).done(function() {
-                           
+                           window.location.reload();
                        });
                     }
                  </script>

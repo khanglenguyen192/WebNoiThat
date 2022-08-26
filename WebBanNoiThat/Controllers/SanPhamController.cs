@@ -96,7 +96,7 @@ namespace WebBanNoiThat.Controllers
                 return Json(new { IsSuccess = false });
             }
 
-            itemInCart.SoLuong += soLuong;
+            itemInCart.SoLuong = soLuong;
             SaveCartSession(listCartItems);
 
             return Json(new { IsSuccess = true });
