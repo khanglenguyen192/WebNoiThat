@@ -182,7 +182,8 @@ namespace WebBanNoiThat.Areas.Admin.Controllers
         {
             if (_session.Get("taikhoan") == null && _session.Get("matkhau") == null)
                 return Redirect(HttpContext.Request.Headers["Referer"]);
-            _session.Clear();
+            _session.Remove("taikhoan");
+            _session.Remove("matkhau");
             return RedirectToAction("Login", "Account");
         }
     }
