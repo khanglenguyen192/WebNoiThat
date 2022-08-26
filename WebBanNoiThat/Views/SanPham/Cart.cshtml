@@ -6,8 +6,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-<div class="amado_SanPham_area section-padding-100">
+<div class="amado_product_area section-padding-100">
     <div class="form-wrap container wrap-login wrapFormClass">
         <div class="row">
             @if (Model.Count > 0)
@@ -36,10 +35,12 @@
                            <td><input asp-for="@cartitem.SoLuong" id="@($"quantity-{cartitem.SanPham.MaSp}")"/></td>
                            <td>@(thanhtien.ToString("n0"))</td>
                            <td>
-                              <button class="btn btn-success updatecartitem" 
-                                    data-productid="@cartitem.SanPham.MaSp">Cập nhật</button>
-                              <a asp-route="removecart" asp-route-SanPhamid="@cartitem.SanPham.MaSp"
-                                class="btn btn-danger">Xóa</a>
+                              <button class="btn btn-success updatecartitem" data-productid="@cartitem.SanPham.MaSp"
+                              onclick="updateCartItem(@cartitem.SanPham.MaSp, @cartitem.SoLuong)">Cập nhật</button>
+                              <a asp-action="RemoveCartItem"
+                                 asp-controller="SanPham" 
+                                 asp-route-id="@cartitem.SanPham.MaSp"
+                                 class="btn btn-danger">Xóa</a>
                            </td>
                         </tr>
                     }
@@ -48,7 +49,21 @@
                         <td>@(total.ToString("n0"))</td>
                         <td></td>
                     </tr>
-                </table>               
+                </table>
+
+                <script>
+                    function updateCartItem(id, soLuong)
+                    {
+                        $.ajax({
+                          type: "POST",
+                          url:"@Url.RouteUrl("updatecart")",
+                          data: { id: id, soLuong: soLuong }
+                       }).done(function() {
+                           
+                       });
+                    }
+                 </script>
+                
             }
             else {
                 <div class="form-wrap container wrap-login wrapFormClass">

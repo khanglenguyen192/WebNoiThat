@@ -62,7 +62,6 @@ namespace WebBanNoiThat.Controllers
             var listItem = GetCartItems();
             return View(listItem);
         }
-
         public ActionResult AddToCart(int id, int soLuong = 1)
         {
             var sanPham = _dbContext.SanPhams.FirstOrDefault(p => p.MaSp == id);
@@ -81,6 +80,38 @@ namespace WebBanNoiThat.Controllers
             else
                 listCartItems.Add(cartItem);
             SaveCartSession(listCartItems);
+
+            return RedirectToAction("Cart", "SanPham");
+        }
+
+        [HttpPost]
+        [Route("/updatecart", Name = "updatecart")]
+        public JsonResult UpdateCartItem(int id, int soLuong = 1)
+        {
+            var listCartItems = GetCartItems();
+
+            var itemInCart = listCartItems.FirstOrDefault(p => p.SanPham?.MaSp == id);
+            if (itemInCart == null)
+            {
+                return Json(new { IsSuccess = false });
+            }
+
+            itemInCart.SoLuong += soLuong;
+            SaveCartSession(listCartItems);
+
+            return Json(new { IsSuccess = true });
+        }
+
+        public ActionResult RemoveCartItem(int id)
+        {
+            var listCartItems = GetCartItems();
+
+            var itemInCart = listCartItems.FirstOrDefault(p => p.SanPham?.MaSp == id);
+            if (itemInCart != null)
+            {
+                listCartItems.Remove(itemInCart);
+                SaveCartSession(listCartItems);
+            }
 
             return RedirectToAction("Cart", "SanPham");
         }
