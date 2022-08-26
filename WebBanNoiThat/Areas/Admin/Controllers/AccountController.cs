@@ -157,6 +157,8 @@ namespace WebBanNoiThat.Areas.Admin.Controllers
         [AllowAnonymous]
         public ActionResult Login()
         {
+            if (_session.Get("taikhoan") != null)
+                return Redirect(Url.Action("Index", "Account"));
             var vm = new Account();
             return View(vm);
         }
@@ -174,7 +176,7 @@ namespace WebBanNoiThat.Areas.Admin.Controllers
             _session.SetString("taikhoan", vm.TaiKhoan);
             _session.SetString("matkhau", vm.MatKhau);
 
-            return Redirect(Url.Action("Index", "Account"));
+            return Redirect(Url.Action("Index", "Home"));
         }
 
         [AllowAnonymous]
