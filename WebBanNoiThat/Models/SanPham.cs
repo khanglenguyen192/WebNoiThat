@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 #nullable disable
 
@@ -27,5 +28,8 @@ namespace WebBanNoiThat.Models
 
         public virtual DanhMucSp MaDmNavigation { get; set; }
         public virtual ICollection<ChiTietDonHang> ChiTietDonHangs { get; set; }
+
+        [NotMapped]
+        public int SoLuong { get; set; }
     }
 }

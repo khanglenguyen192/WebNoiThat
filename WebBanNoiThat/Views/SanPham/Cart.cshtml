@@ -1,0 +1,65 @@
+﻿@model List<WebBanNoiThat.Models.CartItem>
+
+    
+@{
+    ViewData["Title"] = "Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="amado_SanPham_area section-padding-100">
+    <div class="form-wrap container wrap-login wrapFormClass">
+        <div class="row">
+            @if (Model.Count > 0)
+            {
+                decimal total = 0;
+                int stt = 1;
+                <table class="table">
+                    <tr>
+                      <th>#</th>
+                      <th>Sản phẩm</th>
+                      <th>Giá</th>
+                      <th>Số lượng</th>
+                      <th>Thành tiền</th>
+                      <th></th>
+                    </tr>
+    
+                    @foreach (var cartitem in Model)
+                    {
+                        var thanhtien = cartitem.SoLuong * cartitem.SanPham.GiaSp;
+                        total += thanhtien;
+
+                        <tr>
+                           <td>@(stt++)</td>
+                           <td>@cartitem.SanPham.TenSp</td>
+                           <td>@(cartitem.SanPham.GiaSp.ToString("n0"))</td>
+                           <td><input asp-for="@cartitem.SoLuong" id="@($"quantity-{cartitem.SanPham.MaSp}")"/></td>
+                           <td>@(thanhtien.ToString("n0"))</td>
+                           <td>
+                              <button class="btn btn-success updatecartitem" 
+                                    data-productid="@cartitem.SanPham.MaSp">Cập nhật</button>
+                              <a asp-route="removecart" asp-route-SanPhamid="@cartitem.SanPham.MaSp"
+                                class="btn btn-danger">Xóa</a>
+                           </td>
+                        </tr>
+                    }
+                    <tr>
+                        <td colspan="4" class="text-right">Tổng tiền</td>
+                        <td>@(total.ToString("n0"))</td>
+                        <td></td>
+                    </tr>
+                </table>               
+            }
+            else {
+                <div class="form-wrap container wrap-login wrapFormClass">
+                    <div class="table">
+                        <div class="row">
+                            <p class="alert alert-danger">Giỏ hàng trống</p>
+                        </div>
+                        </div>
+                    </div>
+            }
+        </div>
+    </div>
+</div>
+
